@@ -34,6 +34,12 @@ img {
   font-family: 'Montserrat', sans-serif;
 }
 
+#barbie {
+  color: #FE529E;
+  font-family: 'Montserrat', sans-serif;
+  font-size: smaller;
+}
+
 .box-2 p {
   position: relative;
   color:#F6F2E9;
@@ -49,5 +55,32 @@ img {
   background: #A03ACC;
   border-radius: 15px;
   position: relative;
-};
+}
+
+.buy {
+  background-color: #A03ACC;
+  color:#F6F2E9;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 16px;
+  padding: 10px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.get-paid {
+  background-color: #FE529E;
+  color:#F6F2E9;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 16px;
+  padding: 10px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#red-bottoms:hover {
+  background-color: red;
+  color: whitesmoke;
+}
 
