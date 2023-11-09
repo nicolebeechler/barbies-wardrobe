@@ -68,6 +68,17 @@ img {
   margin-right: 10px;
 }
 
+.sell {
+  background-color: turquoise;
+  color:#F6F2E9;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 16px;
+  padding: 10px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .get-paid {
   background-color: #FE529E;
   color:#F6F2E9;
