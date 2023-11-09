@@ -4,7 +4,8 @@ console.log('App is connected');
 const barbie = {
     name: 'Barbie',
     wardrobe: [],
-    wallet: 0
+    wallet: 0,
+    rental: []
 }
 
 class Career {
@@ -74,7 +75,17 @@ class Clothing {
 const birkin = new Clothing('Birkin Bag', 'Hermes', 'purple', 'bag', 'lg', 15470 )
 const redBottoms = new Clothing('Red Bottoms', 'Louis Vuitton', 'black', 'shoes', '6', 3000)
 
+class RentalProperty {
+    constructor(name, type, location, price, income) {
+        this.name = name;
+        this.type = type;
+        this.location = location; 
+        this.price = price;
+        this.income = income;
+    }
+}
 
+const condo = new RentalProperty('Condo', 'Rental', 'Miami', 50000, 500)
 
 
 
@@ -94,8 +105,19 @@ barbie.render = () => {
             return `<li>
             ${barbie.name} has a ${item.color} 
             ${item.name} made by ${item.designer}
-            that is worth ${item.price} in size 
+            that is worth $${item.price} in size 
             ${item.size} 
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+    <div> <h2>Rental Property Contains: </h2>
+    <ul>${
+        barbie.rental.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.name} 
+            in ${item.location} that costs ${item.price} 
+            and adds $${item.income} in income to her bank account.
             </li>`
         })).join('')
     }</ul>
@@ -138,6 +160,22 @@ rbButton.addEventListener('click', () => {
     if (barbie.wallet >= redBottoms.price) {
         barbie.wardrobe.push(redBottoms);
         barbie.wallet -= redBottoms.price;
+        barbie.render();
+        // WE updated the wardrobe that belongs to barbie so the object was changed
+        // the object control the information that is visible to us on the screen
+        // I want to re-render the content so that i can see the updated information in the browser
+    } else {
+        alert('Stop trippin you know you aint got it like that');
+    }
+})
+
+const condoButton = document.getElementById('condo')
+
+condoButton.addEventListener('click', () => {
+    if (barbie.wallet >= condo.price) {
+        barbie.wardrobe.push(condo);
+        barbie.wallet -= condo.price;
+        barbie.wallet += condo.income;
         barbie.render();
         // WE updated the wardrobe that belongs to barbie so the object was changed
         // the object control the information that is visible to us on the screen
