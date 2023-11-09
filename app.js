@@ -5,7 +5,8 @@ const barbie = {
     name: 'Barbie',
     wardrobe: [],
     wallet: 0,
-    rental: []
+    rental: [],
+    garage: []
 }
 
 class Career {
@@ -87,7 +88,16 @@ class RentalProperty {
 
 const condo = new RentalProperty('Condo', 'Rental', 'Miami', 50000, 500)
 
+class Car {
+    constructor(name, color, price, income) {
+        this.name = name;
+        this.color = color;
+        this.price = price;
+        this.income = income;
+    }
+}
 
+const tesla = new Car('Tesla', 'red', 50000, -150)
 
 // Game Screen
 
@@ -116,8 +126,18 @@ barbie.render = () => {
         barbie.rental.map((item => {
             return `<li>
             ${barbie.name} bought a ${item.name} 
-            in ${item.location} that costs ${item.price} 
+            in ${item.location} that costs $${item.price} 
             and adds $${item.income} in income to her bank account.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+    <div> <h2>Garage Contains: </h2> 
+    <ul>${
+        barbie.garage.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.color} ${item.name} 
+            that is worth $${item.price} and deducts ${item.income}
             </li>`
         })).join('')
     }</ul>
@@ -169,11 +189,11 @@ rbButton.addEventListener('click', () => {
     }
 })
 
-const condoButton = document.getElementById('condo')
+const condoBtn = document.getElementById('condo')
 
-condoButton.addEventListener('click', () => {
+condoBtn.addEventListener('click', () => {
     if (barbie.wallet >= condo.price) {
-        barbie.wardrobe.push(condo);
+        barbie.rental.push(condo);
         barbie.wallet -= condo.price;
         barbie.wallet += condo.income;
         barbie.render();
@@ -197,5 +217,18 @@ sellBtn.addEventListener('click', () => {
         barbie.render();
     } else {
         alert('You have nothing to sell!')
+    }
+})
+
+const carBtn = document.getElementById('car')
+
+carBtn.addEventListener('click', () => {
+    if(barbie.wallet >= tesla.price) {
+        barbie.garage.push(tesla);
+        barbie.wallet -= tesla.price;
+        barbie.career.income += tesla.income
+        barbie.render()
+    } else {
+        alert('Stop trippin you know you aint got it like that')
     }
 })
