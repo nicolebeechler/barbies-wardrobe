@@ -36,6 +36,7 @@ const careerDescriptions = [
         description: 'talks about stuff on social media and people say wow and i get paid'
     }
 ]
+
 const careerIncomes = [
  8501,
  18501,
@@ -45,20 +46,18 @@ const careerIncomes = [
  5850,
  6850
 ];
-const careers = [];
 
+const careers = [];
 
 const randomization = (limit) => {
  return Math.floor(Math.random() * limit)
 }
-
 
 for (let i = 10 ; i > 0; i--){
  const job = careerDescriptions[randomization(careerDescriptions.length)]
  const income = careerIncomes[randomization(careerIncomes.length)];
  careers.push(new Career(job.name, job.description, income, `${job.name}-${income}` ))
 }
-
 
 barbie.career = careers[randomization(careers.length)]
 
@@ -167,7 +166,6 @@ barbie.render = () => {
 barbie.render()
 
 
-
 const birkinButton = document.getElementById('birkin');
 
 birkinButton.addEventListener('click', ()=>{
@@ -252,33 +250,22 @@ carBtn.addEventListener('click', () => {
     }
 })
 
-// drop down
+// Goal : Use Sell Assets to sell both cars and rental properties. 
 
-// const careerBtn = document.getElementById('arrayDropdown');
-// let options = barbie.career.name;
-// const options = ['influencer', 'lawyer'];
-// let options = careerDescriptions[0];
+const sellAssetsBtn = document.getElementById('sell-assets')
 
-// careerBtn.addEventListener('click', () => {
-//     for(let i = 0; i < options.length; i++) {
-//         let opt = options[i];
-//         let el = document.createElement('option');
-//         el.textContent = opt;
-//         el.value = opt;
-//         barbie.career.name.appendChild(el);
-//     }
-// }
-// )
-
-// for (let key in careerDescriptions.name) {
-//     let option = document.createElement("option");
-//     option.setAttribute('value', data[key]);
-  
-//     let optionText = document.createTextNode(key);
-//     option.appendChild(optionText);
-  
-//     arrayDropdown.appendChild(option);
-//   }
+sellAssetsBtn.addEventListener('click', () => {
+    if (barbie.rental.length > 0){
+        const randomIndex = randomization(barbie.rental.length)
+        const itemToSell = barbie.rental[randomIndex]
+        barbie.rental.splice(randomIndex, 1)
+        const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
+        barbie.wallet += Math.floor(sellingPrice * itemToSell.price)
+        barbie.render();
+    } else {
+        alert('You have nothing to sell!')
+    }
+})
 
 // // // // // // // // // // // // // // // // // // // 
 
@@ -292,19 +279,102 @@ const ken = {
     garage: [], 
 }
 
+// // // // // // // // // // // // // // // // // // // // 
+
+// Goal: Copy array to Ken object instead of copy/paste
+
+// class CareerKen extends Career {}
+
+// const careerDescriptionsKen = Array.apply(null, careerDescriptions);
+
+// const careerIncomesKen = Array.apply(null, careerIncomes);
+
+// const careersKen = Array.apply(null, careers);
+
+// for (let i = 10 ; i > 0; i--){
+//  const jobKen = careerDescriptionsKen[randomization(careerDescriptionsKen.length)]
+//  const incomeKen = careerIncomesKen[randomization(careerIncomesKen.length)];
+//  careersKen.push(new CareerKen(job.name, job.description, income, `${job.name}-${income}` ))
+// }
+
+// ken.career = careersKen[randomization(careersKen.length)] // Output: null;
+
+// // // // // // // // // // // // // // // // // // // // 
+
+class CareerKen {
+    constructor(name, description, income, id){
+        this.name = name;
+        this.description = description;
+        this.income = income;
+        this.id = id;
+    }
+}
+
+const careerDescriptionsKen = [
+    {
+        name: 'Dentist',
+        description: ''
+    },
+    {
+        name: 'Web Developer',
+        description: ''
+    },
+    {
+        name: 'Finance Manager',
+        description: ''
+    },
+    {
+        name: 'Executive Chef',
+        description: ''
+    }
+]
+
+const careerIncomesKen = [
+ 8501,
+ 18501,
+ 2850,
+ 3850,
+ 4850,
+ 5850,
+ 6850
+];
+
+const careersKen = [];
+
+// used randomization from global space
+
+for (let i = 10 ; i > 0; i--){
+ const jobKen = careerDescriptionsKen[randomization(careerDescriptionsKen.length)]
+ const incomeKen = careerIncomesKen[randomization(careerIncomesKen.length)];
+ careersKen.push(new CareerKen(jobKen.name, jobKen.description, incomeKen, `${jobKen.name}-${incomeKen}` ))
+}
+
+ken.career = careersKen[randomization(careersKen.length)]
+
+let dataKen = ["Change Careers", "Dentist", "Web Developer", "Finance Manager", "Executive Chef"]
+let listKen = document.getElementById('dropdown-ken');
+for (i = 0; i < dataKen.length; ++i) {
+    let li = document.createElement('option');
+    li.innerText = dataKen[i];
+    listKen.appendChild(li);
+}
+
+const raybans = new Clothing('Sunglasses', 'Rayban', 'gold', 'headwear', 'OS', 270 )
+const linenSuit = new Clothing('Linen Suit', 'Todd Snyder', 'beige', 'clothing', '36 x 32', 899)
+
 ken.el = document.getElementById('ken');
 
 ken.render = () => {
     ken.el.innerHTML = `
     <h1>${ken.name} Status</h1>
-    <h3>${ken.name} works as a ${barbie.career.name} </h3>
-    <h3> Each week ${ken.name} takes home $${barbie.career.income}</h3>
-    <h3> Currently ${ken.name} has $${barbie.wallet} in their bank account</h3>
+    <h3>${ken.name} works as a ${ken.career.name} </h3>
+    <h3> Each week ${ken.name} takes home $${ken.career.income}</h3>
+    <h3> Currently ${ken.name} has $${ken.wallet} in their bank account</h3>
     <div> <h2>Wardrobe Contains: </h2> 
     <ul>${
-        barbie.wardrobe.map((item => {
+        ken.wardrobe.map((item => {
             return `<li>
-            ${barbie.name} has a ${item.color} 
+            ${ken.name} has a ${item.color} 
             ${item.name} made by ${item.designer}
             that is worth $${item.price} in size 
             ${item.size} 
@@ -314,21 +384,21 @@ ken.render = () => {
     </div>
     <div> <h2>Rental Property Contains: </h2>
     <ul>${
-        barbie.rental.map((item => {
+        ken.rental.map((item => {
             return `<li>
-            ${barbie.name} bought a ${item.name} 
+            ${ken.name} bought a ${item.name} 
             in ${item.location} that costs $${item.price} 
-            and adds $${item.income} to her recurring income.
+            and adds $${item.income} to his recurring income.
             </li>`
         })).join('')
     }</ul>
     </div>
     <div> <h2>Garage Contains: </h2> 
     <ul>${
-        barbie.garage.map((item => {
+        ken.garage.map((item => {
             return `<li>
-            ${barbie.name} bought a ${item.color} ${item.name} 
-            that is worth $${item.price} and deducts $${item.income} from her recurring income.
+            ${ken.name} bought a ${item.color} ${item.name} 
+            that is worth $${item.price} and deducts $${item.income} from his recurring income.
             </li>`
         })).join('')
     }</ul>
@@ -337,4 +407,96 @@ ken.render = () => {
 }
 
 ken.render()
+
+// // // // // // // // // // // // // // // // // // // // // // // 
+
+const raybanBtn = document.getElementById('raybans');
+
+raybanBtn.addEventListener('click', ()=>{
+    if(ken.wallet >= raybans.price){
+        ken.wardrobe.push(raybans);
+        ken.wallet -= raybans.price;
+        ken.render();
+    } else {
+        alert('Stop trippin you know you aint got it like that');
+    }
+
+})
+
+const linenBtn = document.getElementById('linen-suit')
+
+linenBtn.addEventListener('click', () => {
+    if (ken.wallet >= linenSuit.price) {
+        ken.wardrobe.push(linenSuit);
+        ken.wallet -= linenSuit.price;
+        ken.render();
+    } else {
+        alert('Stop trippin you know you aint got it like that');
+    }
+})
+
+const workButtonKen = document.getElementById('work-ken');
+
+workButtonKen.addEventListener('click', ()=>{
+    ken.wallet += ken.career.income; 
+    ken.render();
+})
+
+const condoBtnKen = document.getElementById('condo-ken')
+
+condoBtnKen.addEventListener('click', () => {
+    if (ken.wallet >= condo.price) {
+        ken.rental.push(condo);
+        ken.wallet -= condo.price;
+        ken.wallet += condo.income;
+        ken.render();
+    } else {
+        alert('Stop trippin you know you aint got it like that');
+    }
+})
+
+const carBtnKen = document.getElementById('car-ken')
+
+carBtnKen.addEventListener('click', () => {
+    if(ken.wallet >= tesla.price) {
+        ken.garage.push(tesla);
+        ken.wallet -= tesla.price;
+        ken.career.income += tesla.income
+        ken.render()
+    } else {
+        alert('Stop trippin you know you aint got it like that')
+    }
+})
+
+// Goal: Use drop down in HTML to select between assets pushed to div. 
+
+const sellBtnKen = document.getElementById('sell-ken')
+
+sellBtnKen.addEventListener('click', () => {
+    if (ken.wardrobe.length > 0){
+        const randomIndex = randomization(ken.wardrobe.length)
+        const itemToSell = ken.wardrobe[randomIndex]
+        ken.wardrobe.splice(randomIndex, 1)
+        const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
+        ken.wallet += Math.floor(sellingPrice * itemToSell.price)
+        ken.render();
+    } else {
+        alert('You have nothing to sell!')
+    }
+})
+
+const sellAssetsBtnKen = document.getElementById('sell-assets-ken')
+
+sellAssetsBtnKen.addEventListener('click', () => {
+    if (ken.rental.length > 0){
+        const randomIndex = randomization(ken.rental.length)
+        const itemToSell = ken.rental[randomIndex]
+        ken.rental.splice(randomIndex, 1)
+        const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
+        ken.wallet += Math.floor(sellingPrice * itemToSell.price)
+        ken.render();
+    } else {
+        alert('You have nothing to sell!')
+    }
+})
 
