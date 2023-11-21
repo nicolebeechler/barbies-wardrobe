@@ -135,7 +135,7 @@ background-color: fuchsia;
   color: whitesmoke;
 }
 
-#dropdown, #dropdownAssets {
+#dropdown, #dropdown-ken, #dropdownAssets {
   color: #F6F2E9;
   font-family: 'Montserrat', sans-serif;
   border: none;
