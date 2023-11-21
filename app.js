@@ -6,7 +6,7 @@ const barbie = {
     wardrobe: [],
     wallet: 0,
     rental: [],
-    garage: []
+    garage: [], 
 }
 
 class Career {
@@ -61,6 +61,25 @@ for (let i = 10 ; i > 0; i--){
 
 
 barbie.career = careers[randomization(careers.length)]
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+// drop down
+
+// const copiedArray = Array.apply(null, careerDescriptions); // [ object, Object, ... ]
+
+// let data = ["Change Careers", copiedArray]; // [ object, Object, ... ] @Line 75
+
+// Goal: push new career name and income from availble populated list (upon page refresh)
+
+let data = ["Change Careers", "Influencer", "Lawyer", "Doctor", "Software Engineer"]
+let list = document.getElementById('dropdown');
+for (i = 0; i < data.length; ++i) {
+    let li = document.createElement('option');
+    li.innerText = data[i];
+    list.appendChild(li);
+}
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 class Clothing {
     constructor(name, designer, color, type, size, price){
@@ -127,7 +146,7 @@ barbie.render = () => {
             return `<li>
             ${barbie.name} bought a ${item.name} 
             in ${item.location} that costs $${item.price} 
-            and adds $${item.income} in income to her bank account.
+            and adds $${item.income} to her recurring income.
             </li>`
         })).join('')
     }</ul>
@@ -137,7 +156,7 @@ barbie.render = () => {
         barbie.garage.map((item => {
             return `<li>
             ${barbie.name} bought a ${item.color} ${item.name} 
-            that is worth $${item.price} and deducts ${item.income}
+            that is worth $${item.price} and deducts $${item.income} from her recurring income.
             </li>`
         })).join('')
     }</ul>
@@ -232,3 +251,90 @@ carBtn.addEventListener('click', () => {
         alert('Stop trippin you know you aint got it like that')
     }
 })
+
+// drop down
+
+// const careerBtn = document.getElementById('arrayDropdown');
+// let options = barbie.career.name;
+// const options = ['influencer', 'lawyer'];
+// let options = careerDescriptions[0];
+
+// careerBtn.addEventListener('click', () => {
+//     for(let i = 0; i < options.length; i++) {
+//         let opt = options[i];
+//         let el = document.createElement('option');
+//         el.textContent = opt;
+//         el.value = opt;
+//         barbie.career.name.appendChild(el);
+//     }
+// }
+// )
+
+// for (let key in careerDescriptions.name) {
+//     let option = document.createElement("option");
+//     option.setAttribute('value', data[key]);
+  
+//     let optionText = document.createTextNode(key);
+//     option.appendChild(optionText);
+  
+//     arrayDropdown.appendChild(option);
+//   }
+
+// // // // // // // // // // // // // // // // // // // 
+
+// Ken
+
+const ken = {
+    name: 'Ken',
+    wardrobe: [],
+    wallet: 0,
+    rental: [],
+    garage: [], 
+}
+
+ken.el = document.getElementById('ken');
+
+ken.render = () => {
+    ken.el.innerHTML = `
+    <h1>${ken.name} Status</h1>
+    <h3>${ken.name} works as a ${barbie.career.name} </h3>
+    <h3> Each week ${ken.name} takes home $${barbie.career.income}</h3>
+    <h3> Currently ${ken.name} has $${barbie.wallet} in their bank account</h3>
+    <div> <h2>Wardrobe Contains: </h2> 
+    <ul>${
+        barbie.wardrobe.map((item => {
+            return `<li>
+            ${barbie.name} has a ${item.color} 
+            ${item.name} made by ${item.designer}
+            that is worth $${item.price} in size 
+            ${item.size} 
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+    <div> <h2>Rental Property Contains: </h2>
+    <ul>${
+        barbie.rental.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.name} 
+            in ${item.location} that costs $${item.price} 
+            and adds $${item.income} to her recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+    <div> <h2>Garage Contains: </h2> 
+    <ul>${
+        barbie.garage.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.color} ${item.name} 
+            that is worth $${item.price} and deducts $${item.income} from her recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+`;
+}
+
+ken.render()
+
