@@ -1,15 +1,26 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
 body {
     background-color: pink;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 80vh;
+    height: 100vh;
 }
 
-
-
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+#barbie-and-ken-container {
+  width:1000px;
+  display: grid;
+  grid-template-columns: repeat(2, 500px);
+  align-items: center;
+  justify-content: center;
+}
 
 .box-1 {
   height:175px;
@@ -24,6 +35,8 @@ img {
   top: 10px;
   right: 20px;
   float: right;
+  width: auto;
+  max-height: 155px;
 }
 
 .box-2 h1 {
@@ -34,7 +47,7 @@ img {
   font-family: 'Montserrat', sans-serif;
 }
 
-#barbie {
+#barbie, #ken {
   color: #FE529E;
   font-family: 'Montserrat', sans-serif;
   font-size: smaller;
@@ -57,41 +70,76 @@ img {
   position: relative;
 }
 
-.buy {
-  background-color: #A03ACC;
+#container-ken {
+  width:400px;
+  height:200px;
+  background: rgb(123, 192, 243);
+  border-radius: 15px;
+  position: relative;
+}
+
+#barbie {
+  width:400px;
+  display: block;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-container {
+  width:400px;
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  align-items: center;
+  justify-content: center;
+}
+
+button {
   color:#F6F2E9;
   font-family: 'Montserrat', sans-serif;
   border-radius: 16px;
   padding: 10px;
-  border: none;
+  border: 5px solid pink;
   margin-left: 10px;
   margin-right: 10px;
+  pointer-events: auto;
+}
+
+button:hover {
+  background-color: turquoise;
+}
+
+.buy {
+  background-color: #A03ACC;
 }
 
 .sell {
-  background-color: turquoise;
-  color:#F6F2E9;
-  font-family: 'Montserrat', sans-serif;
-  border-radius: 16px;
-  padding: 10px;
-  border: none;
-  margin-left: 10px;
-  margin-right: 10px;
+  background-color: lightseagreen;
 }
 
 .get-paid {
   background-color: #FE529E;
-  color:#F6F2E9;
-  font-family: 'Montserrat', sans-serif;
-  border-radius: 16px;
-  padding: 10px;
-  border: none;
-  margin-left: 10px;
-  margin-right: 10px;
+}
+
+.asset {
+background-color: fuchsia;
 }
 
 #red-bottoms:hover {
   background-color: red;
   color: whitesmoke;
 }
+
+#raybans:hover {
+  background-color: gold;
+  color: whitesmoke;
+}
+
+#dropdown, #dropdownAssets {
+  color: #F6F2E9;
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  background-color: transparent;
+}
+
 
