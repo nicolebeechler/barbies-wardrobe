@@ -61,16 +61,6 @@ for (let i = 10 ; i > 0; i--){
 
 barbie.career = careers[randomization(careers.length)]
 
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-
-// drop down
-
-// const copiedArray = Array.apply(null, careerDescriptions); // [ object, Object, ... ]
-
-// let data = ["Change Careers", copiedArray]; // [ object, Object, ... ] @Line 75
-
-// Goal: push new career name and income from availble populated list (upon page refresh)
-
 let data = ["Change Careers", "Influencer", "Lawyer", "Doctor", "Software Engineer"]
 let list = document.getElementById('dropdown');
 for (i = 0; i < data.length; ++i) {
@@ -78,7 +68,18 @@ for (i = 0; i < data.length; ++i) {
     li.innerText = data[i];
     list.appendChild(li);
 }
-// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+// listBarbie.addEventListener('change', function(event) {
+
+//     const selectedCareerBarbie = event.target.value;
+
+//     const selectedCareerObjectBarbie = careers.find(career => career.name === selectedCareerBarbie);
+
+//     if (selectedCareerObjectBarbie) {
+//         barbie.career = selectedCareerObjectBarbie;
+//         barbie.render();
+//     }
+// }); // Ken's function works
 
 class Clothing {
     constructor(name, designer, color, type, size, price){
@@ -165,7 +166,6 @@ barbie.render = () => {
 
 barbie.render()
 
-
 const birkinButton = document.getElementById('birkin');
 
 birkinButton.addEventListener('click', ()=>{
@@ -173,6 +173,7 @@ birkinButton.addEventListener('click', ()=>{
         barbie.wardrobe.push(birkin);
         barbie.wallet -= birkin.price;
         barbie.render();
+        bk.render();
         // WE updated the wardrobe that belongs to barbie so the object was changed
     // the object control the information that is visible to us on the screen
     // I want to re-render the content so that i can see the updated information in the browser
@@ -189,6 +190,7 @@ workButton.addEventListener('click', ()=>{
     // the object control the information that is visible to us on the screen
     // I want to re-render the content so that i can see the updated information in the browser
     barbie.render();
+    bk.render();
 })
 
 const rbButton = document.getElementById('red-bottoms')
@@ -198,6 +200,7 @@ rbButton.addEventListener('click', () => {
         barbie.wardrobe.push(redBottoms);
         barbie.wallet -= redBottoms.price;
         barbie.render();
+        bk.render();
         // WE updated the wardrobe that belongs to barbie so the object was changed
         // the object control the information that is visible to us on the screen
         // I want to re-render the content so that i can see the updated information in the browser
@@ -214,6 +217,7 @@ condoBtn.addEventListener('click', () => {
         barbie.wallet -= condo.price;
         barbie.wallet += condo.income;
         barbie.render();
+        bk.render();
         // WE updated the wardrobe that belongs to barbie so the object was changed
         // the object control the information that is visible to us on the screen
         // I want to re-render the content so that i can see the updated information in the browser
@@ -232,6 +236,7 @@ sellBtn.addEventListener('click', () => {
         const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
         barbie.wallet += Math.floor(sellingPrice * itemToSell.price)
         barbie.render();
+        bk.render();
     } else {
         alert('You have nothing to sell!')
     }
@@ -245,6 +250,7 @@ carBtn.addEventListener('click', () => {
         barbie.wallet -= tesla.price;
         barbie.career.income += tesla.income
         barbie.render()
+        bk.render();
     } else {
         alert('Stop trippin you know you aint got it like that')
     }
@@ -262,10 +268,27 @@ sellAssetsBtn.addEventListener('click', () => {
         const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
         barbie.wallet += Math.floor(sellingPrice * itemToSell.price)
         barbie.render();
+        bk.render();
     } else {
         alert('You have nothing to sell!')
     }
 })
+
+const transferFundsBtn = document.getElementById('bk-barbie')
+
+// prompt user for amount
+
+transferFundsBtn.addEventListener('click', () => {
+    if (barbie.wallet > 0){
+    let barbieTransferAmount = parseInt(prompt('Enter the amount '))
+        barbie.career.income -= barbieTransferAmount
+        ken.wallet += barbieTransferAmount
+        barbie.render();
+        ken.render();
+        bk.render();
+    }
+}
+)
 
 // // // // // // // // // // // // // // // // // // // 
 
@@ -278,28 +301,6 @@ const ken = {
     rental: [],
     garage: [], 
 }
-
-// // // // // // // // // // // // // // // // // // // // 
-
-// Goal: Copy array to Ken object instead of copy/paste
-
-// class CareerKen extends Career {}
-
-// const careerDescriptionsKen = Array.apply(null, careerDescriptions);
-
-// const careerIncomesKen = Array.apply(null, careerIncomes);
-
-// const careersKen = Array.apply(null, careers);
-
-// for (let i = 10 ; i > 0; i--){
-//  const jobKen = careerDescriptionsKen[randomization(careerDescriptionsKen.length)]
-//  const incomeKen = careerIncomesKen[randomization(careerIncomesKen.length)];
-//  careersKen.push(new CareerKen(job.name, job.description, income, `${job.name}-${income}` ))
-// }
-
-// ken.career = careersKen[randomization(careersKen.length)] // Output: null;
-
-// // // // // // // // // // // // // // // // // // // // 
 
 class CareerKen {
     constructor(name, description, income, id){
@@ -359,6 +360,18 @@ for (i = 0; i < dataKen.length; ++i) {
     listKen.appendChild(li);
 }
 
+listKen.addEventListener('change', function(event) {
+
+    const selectedCareer = event.target.value;
+
+    const selectedCareerObject = careersKen.find(career => career.name === selectedCareer);
+
+    if (selectedCareerObject) {
+        ken.career = selectedCareerObject;
+        ken.render();
+    }
+});
+
 const raybans = new Clothing('Sunglasses', 'Rayban', 'gold', 'headwear', 'OS', 270 )
 const linenSuit = new Clothing('Linen Suit', 'Todd Snyder', 'beige', 'clothing', '36 x 32', 899)
 
@@ -417,6 +430,7 @@ raybanBtn.addEventListener('click', ()=>{
         ken.wardrobe.push(raybans);
         ken.wallet -= raybans.price;
         ken.render();
+        bk.render();
     } else {
         alert('Stop trippin you know you aint got it like that');
     }
@@ -430,6 +444,7 @@ linenBtn.addEventListener('click', () => {
         ken.wardrobe.push(linenSuit);
         ken.wallet -= linenSuit.price;
         ken.render();
+        bk.render();
     } else {
         alert('Stop trippin you know you aint got it like that');
     }
@@ -440,6 +455,7 @@ const workButtonKen = document.getElementById('work-ken');
 workButtonKen.addEventListener('click', ()=>{
     ken.wallet += ken.career.income; 
     ken.render();
+    bk.render();
 })
 
 const condoBtnKen = document.getElementById('condo-ken')
@@ -450,6 +466,7 @@ condoBtnKen.addEventListener('click', () => {
         ken.wallet -= condo.price;
         ken.wallet += condo.income;
         ken.render();
+        bk.render();
     } else {
         alert('Stop trippin you know you aint got it like that');
     }
@@ -463,6 +480,7 @@ carBtnKen.addEventListener('click', () => {
         ken.wallet -= tesla.price;
         ken.career.income += tesla.income
         ken.render()
+        bk.render();
     } else {
         alert('Stop trippin you know you aint got it like that')
     }
@@ -480,6 +498,7 @@ sellBtnKen.addEventListener('click', () => {
         const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
         ken.wallet += Math.floor(sellingPrice * itemToSell.price)
         ken.render();
+        bk.render();
     } else {
         alert('You have nothing to sell!')
     }
@@ -495,8 +514,153 @@ sellAssetsBtnKen.addEventListener('click', () => {
         const sellingPrice = (Math.floor(Math.random()*((200-70)+1)+70))*0.01
         ken.wallet += Math.floor(sellingPrice * itemToSell.price)
         ken.render();
+        bk.render();
     } else {
         alert('You have nothing to sell!')
     }
 })
 
+const transferFundsBtnKen = document.getElementById('bk-ken')
+
+// prompt user for amount
+
+transferFundsBtnKen.addEventListener('click', () => {
+    if (ken.wallet > 0){
+    let kenTransferAmount = parseInt(prompt('Enter the amount '))
+        ken.career.income -= kenTransferAmount
+        barbie.wallet += kenTransferAmount
+        ken.render();
+        barbie.render();
+        bk.render();
+    }
+}
+)
+
+// // // // // // // 
+
+// Barbie & Ken
+
+const bk = {
+    name: 'Barbie & Ken',
+    wardrobe: [],
+    wallet: 0,
+    rental: [],
+    garage: [], 
+}
+
+bk.el = document.getElementById('bk');
+
+bk.render = () => {
+    bk.el.innerHTML = `
+    <h1>${barbie.name} & ${ken.name} Status</h1>
+    <h3> Currently ${barbie.name} has $${barbie.wallet} in their bank account</h3>
+    <h3> Currently ${ken.name} has $${ken.wallet} in their bank account</h3>
+    <h3> They have $${bk.wallet} combined</h3>
+
+    <div> <h2>Wardrobe Contains: </h2> 
+    <ul>${
+        barbie.wardrobe.map((item => {
+            return `<li>
+            ${barbie.name} has a ${item.color} 
+            ${item.name} made by ${item.designer}
+            that is worth $${item.price} in size 
+            ${item.size} 
+            </li>`
+        })).join('')
+    }</ul>
+    <ul>${
+        ken.wardrobe.map((item => {
+            return `<li>
+            ${ken.name} has a ${item.color} 
+            ${item.name} made by ${item.designer}
+            that is worth $${item.price} in size 
+            ${item.size} 
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+
+    <div> <h2>Rental Property Contains: </h2>
+    <ul>${
+        barbie.rental.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.name} 
+            in ${item.location} that costs $${item.price} 
+            and adds $${item.income} to her recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    <ul>${
+        ken.rental.map((item => {
+            return `<li>
+            ${ken.name} bought a ${item.name} 
+            in ${item.location} that costs $${item.price} 
+            and adds $${item.income} to his recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+
+    <div> <h2>Garage Contains: </h2> 
+    <ul>${
+        barbie.garage.map((item => {
+            return `<li>
+            ${barbie.name} bought a ${item.color} ${item.name} 
+            that is worth $${item.price} and deducts $${item.income} from her recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    <ul>${
+        ken.garage.map((item => {
+            return `<li>
+            ${ken.name} bought a ${item.color} ${item.name} 
+            that is worth $${item.price} and deducts $${item.income} from his recurring income.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
+`;
+}
+
+bk.render()
+
+bk.wallet = barbie.career.income + ken.career.income;
+bk.render(); // output: adds their initial incomes before "Get Paid" Button is clicked
+
+const jointGarageSale = () => {
+    const itemsForSale = [...barbie.wardrobe, ...ken.wardrobe]; 
+    const salePrices = itemsForSale.map(item => Math.floor(Math.random() * (200 - 70 + 1) + 70) * 0.01); 
+    const totalItems = itemsForSale.length;
+
+    for (let i = 0; i < totalItems; i++) {
+        const item = itemsForSale[i];
+        const sellingPrice = salePrices[i];
+
+        if (barbie.wardrobe.includes(item)) {
+            barbie.wardrobe.splice(barbie.wardrobe.indexOf(item), 1);
+        } else if (ken.wardrobe.includes(item)) {
+            ken.wardrobe.splice(ken.wardrobe.indexOf(item), 1);
+        }
+        bk.wallet += Math.floor(sellingPrice * item.price);
+    }
+
+    barbie.render();
+    ken.render();
+    bk.render();
+};
+
+const sellJointBtn = document.getElementById('sell-bk');
+
+sellJointBtn.addEventListener('click', () => {
+    if (barbie.wardrobe.length > 0 || ken.wardrobe.length > 0) {
+        jointGarageSale(); 
+    } else {
+        alert("There's nothing to sell!");
+    }
+});
+
+// 1.2 (Ken's code block works, but Barbie's does not.) Update Barbie's careerproperty when a new option is selected and reflect the change in income.
+// 4.3 Add functionality to transfer items between Barbie and Ken.
+// 5.1 Allow Barbie to change outfits based on her career choice.
+// 5.2 (Sells all items, not one at a time.)
+// 5.3 Enable interactive shopping experiences where users can drag and drop items to and from the wardrobe.
